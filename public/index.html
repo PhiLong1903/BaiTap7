@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CI/CD Pipeline Demo - 2024</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>🚀 CI/CD Pipeline Demo</h1>
+        <p>Bài Tập 7: GitLab CI/CD + Pages</p>
+    </header>
+
+    <main>
+        <section class="info">
+            <h2>📚 Khái Niệm CI/CD</h2>
+            <div class="card">
+                <h3>CI - Continuous Integration</h3>
+                <p>Tự động build và test mỗi khi push code</p>
+                <ul>
+                    <li>✓ Build project</li>
+                    <li>✓ Run tests</li>
+                    <li>✓ Check code quality</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>CD - Continuous Deployment</h3>
+                <p>Tự động deploy phiên bản mới lên production</p>
+                <ul>
+                    <li>✓ Deploy lên server</li>
+                    <li>✓ Verify deployment</li>
+                    <li>✓ Notify team</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="pipeline">
+            <h2>⚙️ Pipeline Stages</h2>
+            <div class="stage-diagram">
+                <div class="stage">Build</div>
+                <div class="arrow">→</div>
+                <div class="stage">Test</div>
+                <div class="arrow">→</div>
+                <div class="stage">Deploy</div>
+            </div>
+            <p class="note">Mỗi stage chỉ chạy khi stage trước đó thành công</p>
+        </section>
+
+        <section class="team">
+            <h2>👥 Nhóm 3: Vai trò</h2>
+            <table>
+                <tr>
+                    <th>Người</th>
+                    <th>Vai trò</th>
+                    <th>Công việc</th>
+                </tr>
+                <tr>
+                    <td>Người 1</td>
+                    <td>GitLab & CI/CD</td>
+                    <td>Cấu hình pipeline, monitor</td>
+                </tr>
+                <tr>
+                    <td>Người 2</td>
+                    <td>Frontend Dev</td>
+                    <td>Viết HTML/CSS/JS</td>
+                </tr>
+                <tr>
+                    <td>Người 3</td>
+                    <td>QA & Document</td>
+                    <td>Test, chụp screenshot</td>
+                </tr>
+            </table>
+        </section>
+
+        <footer>
+            <p>Deployed via GitLab CI/CD Pipeline ✨</p>
+            <p id="time">Loading time...</p>
+        </footer>
+    </main>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
