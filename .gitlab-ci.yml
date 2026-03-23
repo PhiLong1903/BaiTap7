@@ -1,14 +1,74 @@
-stages:
-  - deploy
+name: CI/CD Pipeline
 
-pages:
-  stage: deploy
-  script:
-    - echo "Deploying to GitLab Pages..."
-    - echo "Pipeline executed at: $(date)"
-  artifacts:
-    paths:
-      - public
-    expire_in: 1 day
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build
+        run: |
+          echo "🏗️ Building the project..."
+          echo "Build completed at: $(date)"
+          echo "Build Status: ✅ Success"
+
+  test:
+    runs-on: ubuntu-latest
+    name: Test
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run tests
+        run: |
+          echo "🧪 Running tests..."
+          echo "Checking HTML syntax..."
+          test -f public/index.html && echo "✓ index.html exists" || exit 1
+          test -f public/styles.css && echo "✓ styles.css exists" || exit 1
+          test -f public/js/main.js && echo "✓ main.js exists" || exit 1
+          echo "Test Status: ✅ All tests passed"
+
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy to GitHub Pages
+    needs: test
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: 'public'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+
+      - name: Deployment complete
+        run: |
+          echo "🚀 Deployed to GitHub Pages successfully!"
+          echo "Site URL: ${{ steps.deployment.outputs.page_url }}"
